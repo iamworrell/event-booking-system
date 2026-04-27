@@ -12,9 +12,8 @@ and validate system behavior under stress, reflecting practical backend engineer
 
 ## ✨ Features
 - Seat reservation system
-- Real-time conflict handling
+- Real time conflict handling
 - Load testing with Locust
 
 ![Python](https://img.shields.io/badge/python-3.13-blue)
 ![Django](https://img.shields.io/badge/django-rest_framework-green)
-![Status](https://img.shields.io/badge/status-active-brightgreen)
