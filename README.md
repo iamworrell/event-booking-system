@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="assets/event_booker.jpg" width="700"/>
+  <img src="assets/event_booker.jpg" width="100%"/>
 </p>
+</br>
 A backend focused event booking system built with DJango and PostgreSQL that simulates real world ticket 
 purchasing under high concurrency. The system implements seat reservation, purchase workflows, and transactional 
 safeguards to prevent double booking, using database constraints, atomic operations and standard database design techniques
