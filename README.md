@@ -8,7 +8,7 @@ safeguards to prevent double booking, using database constraints, atomic operati
 to ensure data integrity. It has been tested under load with concurrent users to evaluate performance, handle race conditions, 
 and validate system behavior under stress, reflecting practical backend engineering and system design considerations.
 
-🚀 Ticket Booking System
+## 🚀 Ticket Booking System
 
 ## ✨ Features
 - Seat reservation system
