@@ -116,7 +116,7 @@ def on_test_stop(environment, **kwargs):
     print("=" * 55 + "\n")
 
 
-# ─── SIMULATED USER ───────────────────────────────────────────────────────────
+# SIMULATED USER
 # HttpUser is the base class for a simulated user.
 # Everything inside this class defines what ONE user does while the test is running.
 # Locust will create as many copies of this user as you set in the UI.
@@ -139,6 +139,13 @@ class BookingUser(HttpUser):
     # Lower values = more aggressive load. Try between(0.1, 0.5) for extreme pressure.
     wait_time = between(0.5, 2)
 
+    """
+    self is the instance of the class that is created when Locust runs your test. 
+    You dont create it manually. Locust creates one BookingUser object per simulated user and passes it into your methods automatically. 
+    That object already has features from HttpUser (like self.client for making requests), 
+    and you can also attach your own data to it at runtime, like self.user_id or self.current_reservation.
+    Each simulated user has its own separate self, so their data and actions dont interfere with each other.
+    """
     def on_start(self):
         """
         on_start() is called once when each simulated user first starts.
@@ -154,7 +161,7 @@ class BookingUser(HttpUser):
         # so the purchase task knows what to buy. None means no active reservation.
         self.current_reservation = None
 
-    # ── TASK 1: Reserve a seat ────────────────────────────────────────────────
+    # TASK 1: Reserve a seat
     # weight=3 means this task is picked 3x more often than tasks with weight=1
     # This reflects real usage: users browse and attempt reservations more than purchases
     @task(3)
@@ -242,10 +249,11 @@ class BookingUser(HttpUser):
             # This helps you spot which endpoints are slowing down under load
             if duration > 1000:
                 logging.warning(
+                  #duration:.0f <--- turn into a float with 0 decimal places, round to the nearest whole number
                     f"SLOW reserve: {duration:.0f}ms — user={self.user_id} seat={seat_code}"
                 )
 
-    # ── TASK 2: Purchase a ticket ─────────────────────────────────────────────
+    # TASK 2: Purchase a ticket
     # weight=1 means this runs less often than reserve_seat (weight=3)
     # Reflects real usage: not every reservation leads to an immediate purchase
     @task(1)
@@ -324,7 +332,7 @@ class BookingUser(HttpUser):
                     f"SLOW purchase: {duration:.0f}ms — user={self.user_id} seat={reservation['seat_code']}"
                 )
 
-    # ── TASK 3: List all reservations (read load) ─────────────────────────────
+    # TASK 3: List all reservations (read load)
     # weight=1 — runs occasionally to simulate users checking available seats
     # GET requests are much cheaper than POST, but under high load they still add up
     @task(1)
@@ -344,7 +352,7 @@ class BookingUser(HttpUser):
                 # Any non-200 on a simple GET is unexpected — flag it
                 response.failure(f"GET reservations failed: {response.status_code}")
 
-    # ── TASK 4: List all tickets (read load) ──────────────────────────────────
+    # TASK 4: List all tickets (read load)
     # weight=1 — runs occasionally to simulate users checking purchased tickets
     @task(1)
     def list_tickets(self):
