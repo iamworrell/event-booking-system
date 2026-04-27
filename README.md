@@ -7,3 +7,14 @@ purchasing under high concurrency. The system implements seat reservation, purch
 safeguards to prevent double booking, using database constraints, atomic operations and standard database design techniques
 to ensure data integrity. It has been tested under load with concurrent users to evaluate performance, handle race conditions, 
 and validate system behavior under stress, reflecting practical backend engineering and system design considerations.
+
+# 🚀 Ticket Booking System
+
+## ✨ Features
+- Seat reservation system
+- Real-time conflict handling
+- Load testing with Locust
+
+![Python](https://img.shields.io/badge/python-3.10-blue)
+![Django](https://img.shields.io/badge/django-rest_framework-green)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
